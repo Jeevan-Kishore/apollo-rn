@@ -26,7 +26,7 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
-import {HOME_CALL} from './constants';
+import { HOME_CALL, HOST } from "./constants";
 import {CollectionViewer} from './src/CollectionViewer';
 
 const Section = ({children, title}) => {
@@ -59,7 +59,7 @@ const Section = ({children, title}) => {
 const cache = new InMemoryCache();
 
 const link = new HttpLink({
-  uri: 'http://localhost:3000/graphql',
+  uri: HOST,
   useGETForQueries: true,
 });
 
