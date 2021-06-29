@@ -82,16 +82,11 @@ const App = () => {
 
   return (
     <ApolloProvider client={client}>
-      <SafeAreaView style={backgroundStyle}>
+      <SafeAreaView>
         <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={backgroundStyle}>
+        <ScrollView contentInsetAdjustmentBehavior="automatic">
           <Header />
-          <View
-            style={{
-              backgroundColor: isDarkMode ? Colors.black : Colors.white,
-            }}>
+          <View>
             <CollectionViewer />
           </View>
         </ScrollView>

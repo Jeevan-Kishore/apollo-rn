@@ -12,7 +12,7 @@ export const CollectionViewer = props => {
     <>
       <Button title={'Refresh'} onPress={() => refetch()} />
       {data.getHome.items.map(({name}, index) => (
-        <Text style={{margin: 10}} key={`${name}-${index}`}>
+        <Text style={{margin: 10, color: 'blue'}} key={`${name}-${index}`}>
           {name}
         </Text>
       ))}
