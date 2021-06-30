@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from "react";
 import {
-  Button,
   SafeAreaView,
   ScrollView,
   StatusBar,
@@ -11,23 +10,15 @@ import {
 } from 'react-native';
 
 import {
-  ApolloClient,
-  InMemoryCache,
   ApolloProvider,
-  useQuery,
-  gql,
-  HttpLink,
 } from '@apollo/client';
 
 import {
   Colors,
-  DebugInstructions,
   Header,
-  LearnMoreLinks,
-  ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
-import { HOME_CALL, HOST } from "./constants";
 import {CollectionViewer} from './src/CollectionViewer';
+import { initCaching } from "./src/caching";
 
 const Section = ({children, title}) => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -56,29 +47,19 @@ const Section = ({children, title}) => {
   );
 };
 
-const cache = new InMemoryCache();
-
-const link = new HttpLink({
-  uri: HOST,
-  useGETForQueries: true,
-});
-
-const client = new ApolloClient({
-  link,
-  cache,
-  queryDeduplication: false,
-  defaultOptions: {
-    watchQuery: {
-      fetchPolicy: 'cache-and-network',
-    },
-  },
-});
 
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
+  const [client, setClient] = useState();
+  const [persistor, setPersistor] = useState();
+
+  useEffect(() => {
+    initCaching({setClient, setPersistor});
+  }, []);
+
+  if (!client) {
+    return <Text>Initializing app...</Text>;
+  }
 
   return (
     <ApolloProvider client={client}>
